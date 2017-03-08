@@ -5,7 +5,7 @@
 ** Login   <philippe1.lefevre@epitech.eu>
 **
 ** Started on  Wed Mar  8 10:57:57 2017 Philippe Lefevre
-** Last update	Wed Mar 08 11:51:14 2017 Full Name
+** Last update	Wed Mar 08 13:00:20 2017 Full Name
 */
 
 #include	"philosophe.h"
@@ -17,6 +17,7 @@ t_philosophe	*createNode(enum e_cycle cycle, unsigned int eat_occur)
   if ((new_node = malloc(sizeof(t_philosophe))) == NULL)
     return (NULL);
   new_node->cycle = cycle;
+  new_node->chopstick = TAKE;
   new_node->eat_occur = eat_occur;
   new_node->next = NULL;
   return (new_node);
@@ -54,8 +55,11 @@ void		showList(t_philosophe *philosophe)
   while (tmp != NULL)
     {
       ++i;
-      printf("Philosophe %d still %d eat occurence ; cycle %d\n",
-	     i, tmp->eat_occur, tmp->cycle);
+      printf("Philosophe %d still %d eat occurence ; cycle %s\n",
+	     i, tmp->eat_occur, ((tmp->cycle == SLEEP) ? ("SLEEP")
+				 : ((tmp->cycle == EAT) ? ("EAT")
+				    : ((tmp->cycle == THINK) ? ("THINK")
+				       : "UNDIFINED"))));
       tmp = tmp->next;
 
     }
