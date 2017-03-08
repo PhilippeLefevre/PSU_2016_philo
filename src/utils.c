@@ -5,7 +5,7 @@
 ** Login   <philippe1.lefevre@epitech.eu>
 **
 ** Started on  Wed Mar  8 10:58:41 2017 Philippe Lefevre
-** Last update	Wed Mar 08 10:59:02 2017 Full Name
+** Last update	Wed Mar 08 17:07:47 2017 Full Name
 */
 
 #include	<stdio.h>
@@ -19,7 +19,6 @@ int		is_num(char *s)
     {
       if (!((s[i] >= '0') && (s[i] <= '9')))
 	{
-	  printf("is not number %c\n", s[i]);
 	  return (0);
 	}
     }

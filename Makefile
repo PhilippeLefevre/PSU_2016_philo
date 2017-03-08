@@ -5,12 +5,12 @@
 ## Login   <philippe1.lefevre@epitech.eu>
 ##
 ## Started on  Wed Mar  8 09:30:40 2017 Philippe Lefevre
-## Last update Wed Mar  8 12:40:08 2017 Philippe Lefevre
+## Last update Wed Mar  8 17:53:34 2017 Philippe Lefevre
 ##
 
 NAME		=	philo
 
-CC		=	gcc
+CC		=	gcc -g
 CFLAGS		=	-W -Wextra -Wall -pedantic -ansi
 #CFLAGS		+=	-Werror
 CFLAGS		+=	-Iinc
@@ -18,6 +18,7 @@ CFLAGS		+=	-Iinc
 LDFLAGS		=	-Llib -lriceferee -lpthread
 
 SRC		=	src/main.c			\
+			src/init.c			\
 			src/utils.c			\
 			src/listPhilosophe.c
 

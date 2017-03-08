@@ -5,7 +5,7 @@
 ** Login   <philippe1.lefevre@epitech.eu>
 **
 ** Started on  Wed Mar  8 10:57:57 2017 Philippe Lefevre
-** Last update	Wed Mar 08 13:00:20 2017 Full Name
+** Last update	Wed Mar 08 18:19:11 2017 Full Name
 */
 
 #include	"philosophe.h"
@@ -17,9 +17,11 @@ t_philosophe	*createNode(enum e_cycle cycle, unsigned int eat_occur)
   if ((new_node = malloc(sizeof(t_philosophe))) == NULL)
     return (NULL);
   new_node->cycle = cycle;
-  new_node->chopstick = TAKE;
+  new_node->chopstick_left = RELEASE;
+  new_node->chopstick_right = TAKE;
   new_node->eat_occur = eat_occur;
-  new_node->next = NULL;
+  new_node->next = new_node;
+  new_node->prev = new_node;
   return (new_node);
 }
 
@@ -37,11 +39,14 @@ t_philosophe	*addNode(t_philosophe *list,
       return (new);
     }
   tmp = list;
-  while (tmp->next != NULL)
-    tmp = tmp->next;
   if ((new = createNode(cycle, eat_occur)) == NULL)
     return (NULL);
+  while (tmp->next != list)
+    tmp = tmp->next;
   tmp->next = new;
+  new->prev = tmp;
+  new->next = list;
+  list->prev = new;
   return (list);
 }
 
@@ -52,17 +57,24 @@ void		showList(t_philosophe *philosophe)
 
   tmp = philosophe;
   i = 0;
-  while (tmp != NULL)
+  while (tmp->next != philosophe)
     {
       ++i;
       printf("Philosophe %d still %d eat occurence ; cycle %s\n",
-	     i, tmp->eat_occur, ((tmp->cycle == SLEEP) ? ("SLEEP")
+	     i, tmp->eat_occur, ((tmp->cycle == REST) ? ("REST")
 				 : ((tmp->cycle == EAT) ? ("EAT")
 				    : ((tmp->cycle == THINK) ? ("THINK")
 				       : "UNDIFINED"))));
       tmp = tmp->next;
 
     }
+  ++i;
+  printf("Philosophe %d still %d eat occurence ; cycle %s\n",
+	 i, tmp->eat_occur, ((tmp->cycle == REST) ? ("REST")
+			     : ((tmp->cycle == EAT) ? ("EAT")
+				: ((tmp->cycle == THINK) ? ("THINK")
+				   : "UNDIFINED"))));
+  tmp = tmp->next;
 }
 
 void		freeList(t_philosophe *philosophe)
@@ -71,10 +83,11 @@ void		freeList(t_philosophe *philosophe)
   t_philosophe	*to_free;
 
   tmp = philosophe;
-  while (tmp != NULL)
+  while (tmp->next != philosophe)
     {
       to_free = tmp;
       tmp = tmp->next;
       free(to_free);
     }
+  free(tmp);
 }
