@@ -5,7 +5,7 @@
 ## Login   <philippe1.lefevre@epitech.eu>
 ##
 ## Started on  Wed Mar  8 09:30:40 2017 Philippe Lefevre
-## Last update Wed Mar  8 11:54:02 2017 Philippe Lefevre
+## Last update Wed Mar  8 12:40:08 2017 Philippe Lefevre
 ##
 
 NAME		=	philo
@@ -15,7 +15,7 @@ CFLAGS		=	-W -Wextra -Wall -pedantic -ansi
 #CFLAGS		+=	-Werror
 CFLAGS		+=	-Iinc
 
-LDFLAGS		=	-lpthread -Llib -lriceferee
+LDFLAGS		=	-Llib -lriceferee -lpthread
 
 SRC		=	src/main.c			\
 			src/utils.c			\

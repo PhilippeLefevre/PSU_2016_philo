@@ -5,7 +5,7 @@
 ** Login   <philippe1.lefevre@epitech.eu>
 **
 ** Started on  Wed Mar  8 09:35:54 2017 Philippe Lefevre
-** Last update	Wed Mar 08 11:53:45 2017 Full Name
+** Last update	Wed Mar 08 12:39:59 2017 Full Name
 */
 
 #include	"extern.h"
@@ -54,10 +54,7 @@ t_philosophe	*initPhilosophe(char **av)
   philosophe = NULL;
   i = 0;
   while (++i <= nb_philosophe)
-    {
-      printf("Creation du philosophe numero %d\n", i);
-      philosophe = addNode(philosophe, UNDIFINED, nb_eat_occur);
-    }
+    philosophe = addNode(philosophe, UNDIFINED, nb_eat_occur);
   return (philosophe);
 }
 
