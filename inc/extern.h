@@ -1,3 +1,13 @@
+/*
+** extern.h for  in /home/atraxys/workspace/epitech/year_2/PSU_2016_philo/inc/
+**
+** Made by Philippe Lefevre
+** Login   <philippe1.lefevre@epitech.eu>
+**
+** Started on  Wed Mar  8 09:38:51 2017 Philippe Lefevre
+** Last update	Wed Mar 08 09:38:54 2017 Full Name
+*/
+
 #ifndef __LIBRICEFEREE_EXTERN__
 # define __LIBRICEFEREE_EXTERN__
 

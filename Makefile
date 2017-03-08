@@ -5,7 +5,7 @@
 ## Login   <philippe1.lefevre@epitech.eu>
 ##
 ## Started on  Wed Mar  8 09:30:40 2017 Philippe Lefevre
-## Last update Wed Mar  8 09:36:20 2017 Philippe Lefevre
+## Last update Wed Mar  8 10:59:44 2017 Philippe Lefevre
 ##
 
 NAME		=	philo
@@ -15,14 +15,18 @@ CFLAGS		=	-W -Wextra -Wall -pedantic -ansi
 #CFLAGS		+=	-Werror
 CFLAGS		+=	-Iinc
 
-SRC		=	src/main.c
+LDFLAGS		=	-lpthread -Llib #-lriceferee
+
+SRC		=	src/main.c			\
+			src/utils.c			\
+			src/listPhilosophe.c
 
 OBJ		=	$(SRC:.c=.o)
 
 all		:	$(NAME)
 
 $(NAME)		:	$(OBJ)
-			$(CC) $(OBJ) -o $(NAME)
+			$(CC) $(OBJ) $(LDFLAGS) -o $(NAME)
 
 clean		:
 			$(RM) $(OBJ)
