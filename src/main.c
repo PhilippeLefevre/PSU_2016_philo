@@ -5,7 +5,7 @@
 ** Login   <philippe1.lefevre@epitech.eu>
 **
 ** Started on  Wed Mar  8 09:35:54 2017 Philippe Lefevre
-** Last update	Wed Mar 08 11:38:49 2017 Full Name
+** Last update	Wed Mar 08 11:53:45 2017 Full Name
 */
 
 #include	"extern.h"
@@ -15,30 +15,30 @@ void		initArg(char **av, unsigned int *nb_philosophe,
 			unsigned int *nb_eat_occur)
 {
   unsigned int	i;
+  int		len_arg;
 
   i = 0;
   while (av[++i])
-    if (strlen(av[i]) == 2)
+    if (((len_arg = strlen(av[i])) == 2) && av[i][0] == '-' && av[i][1] == 'p')
       {
-	if (av[i][0] == '-' && av[i][1] == 'p')
-	  {
-	    *nb_philosophe = (av[i + 1] && is_num(av[i + 1])) ? (atoi(av[i + 1])) : (0);
-	    if ((*nb_philosophe == 0) && (av[i + 1]))
-	      fprintf(stderr, "Error: Invalid number of philosopher\n");
-	    if ((*nb_philosophe == 0) && !(av[i + 1]))
-	      fprintf(stderr, "Error: %s as no value\n", av[i]);
-	  }
-	else if (av[i][0] == '-' && av[i][1] == 'e')
-	  {
-	    *nb_eat_occur = (av[i + 1] && is_num(av[i + 1])) ? (atoi(av[i + 1])) : (0);
-	    if ((*nb_eat_occur == 0) && (av[i + 1]))
-	      fprintf(stderr, "Error: Invalid number of eat occurence\n");
-	    if ((*nb_eat_occur == 0) && !(av[i + 1]))
-	      fprintf(stderr, "Error: %s as no value\n", av[i]);
-	  }
-	else if (!(is_num(av[i])))
-	  fprintf(stderr, "Error: Unkown option %s\n", av[i]);
+	*nb_philosophe = (av[i + 1]
+			  && is_num(av[i + 1])) ? (atoi(av[i + 1])) : (0);
+	if ((*nb_philosophe == 0) && (av[i + 1]))
+	  fprintf(stderr, "Error: Invalid number of philosopher\n");
+	if ((*nb_philosophe == 0) && !(av[i + 1]))
+	  fprintf(stderr, "Error: %s as no value\n", av[i]);
       }
+    else if (len_arg == 2 && av[i][0] == '-' && av[i][1] == 'e')
+      {
+	*nb_eat_occur = (av[i + 1]
+			 && is_num(av[i + 1])) ? (atoi(av[i + 1])) : (0);
+	if ((*nb_eat_occur == 0) && (av[i + 1]))
+	  fprintf(stderr, "Error: Invalid number of eat occurence\n");
+	if ((*nb_eat_occur == 0) && !(av[i + 1]))
+	  fprintf(stderr, "Error: %s as no value\n", av[i]);
+      }
+    else if (len_arg == 2 && !(is_num(av[i])))
+      fprintf(stderr, "Error: Unkown option %s\n", av[i]);
 }
 
 t_philosophe	*initPhilosophe(char **av)
@@ -67,12 +67,12 @@ int             main(int ac, char **av)
 
   if (ac >= 5)
     {
-      /*RCFStartup(ac, av);*/
+      RCFStartup(ac, av);
       if ((philosophe = initPhilosophe(av)) == NULL)
 	return (ERROR);
       showList(philosophe);
       freeList(philosophe);
-      /*RCFCleanup();*/
+      RCFCleanup();
     }
   return (SUCCESS);
 }

@@ -5,7 +5,7 @@
 ** Login   <philippe1.lefevre@epitech.eu>
 **
 ** Started on  Wed Mar  8 10:57:57 2017 Philippe Lefevre
-** Last update	Wed Mar 08 11:39:56 2017 Full Name
+** Last update	Wed Mar 08 11:51:14 2017 Full Name
 */
 
 #include	"philosophe.h"
@@ -54,7 +54,8 @@ void		showList(t_philosophe *philosophe)
   while (tmp != NULL)
     {
       ++i;
-      printf("Philosophe %d still %d eat occurence ; cycle %d\n", i, tmp->eat_occur, tmp->cycle);
+      printf("Philosophe %d still %d eat occurence ; cycle %d\n",
+	     i, tmp->eat_occur, tmp->cycle);
       tmp = tmp->next;
 
     }
