@@ -5,7 +5,7 @@
 ** Login   <philippe1.lefevre@epitech.eu>
 **
 ** Started on  Thu Mar  9 16:35:25 2017 Philippe Lefevre
-** Last update	Thu Mar 09 16:43:41 2017 Full Name
+** Last update	Thu Mar 09 16:48:48 2017 Full Name
 */
 
 #include	"philosophe.h"
@@ -65,6 +65,7 @@ static void	*doPhilosophe(void *p)
     {
       if (haveFullyeat(philosophe))
 	{
+	  pthread_exit(NULL);
 	  RCFCleanup();
 	  exit(SUCCESS);
 	}
@@ -94,4 +95,5 @@ void		doTable(unsigned int nb_philosophe, t_philosophe *philosophe)
   i = -1;
   while (++i < nb_philosophe)
     pthread_join(thread_id[i], NULL);
+  RCFCleanup();
 }
