@@ -5,7 +5,7 @@
 ** Login   <philippe1.lefevre@epitech.eu>
 **
 ** Started on  Wed Mar  8 09:38:51 2017 Philippe Lefevre
-** Last update	Wed Mar 08 09:38:54 2017 Full Name
+** Last update	Wed Mar 08 09:38:54 2017 Philippe Lefevre
 */
 
 #ifndef __LIBRICEFEREE_EXTERN__

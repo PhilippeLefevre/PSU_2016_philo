@@ -5,7 +5,7 @@
 ** Login   <philippe1.lefevre@epitech.eu>
 **
 ** Started on  Wed Mar  8 09:35:54 2017 Philippe Lefevre
-** Last update	Thu Mar 09 16:44:13 2017 Full Name
+** Last update	Thu Mar 09 16:44:13 2017 Philippe Lefevre
 */
 
 #include	"philosophe.h"

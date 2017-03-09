@@ -5,7 +5,7 @@
 ** Login   <philippe1.lefevre@epitech.eu>
 **
 ** Started on  Wed Mar  8 10:58:41 2017 Philippe Lefevre
-** Last update	Wed Mar 08 17:07:47 2017 Full Name
+** Last update	Wed Mar 08 17:07:47 2017 Philippe Lefevre
 */
 
 #include	<stdio.h>
