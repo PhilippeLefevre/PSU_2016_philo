@@ -5,7 +5,7 @@
 ** Login   <philippe1.lefevre@epitech.eu>
 **
 ** Started on  Wed Mar  8 16:48:31 2017 Philippe Lefevre
-** Last update	Wed Mar 08 19:06:00 2017 Full Name
+** Last update	Thu Mar 09 14:32:46 2017 Full Name
 */
 
 #include	"philosophe.h"
@@ -45,6 +45,7 @@ void		setRolecycle(t_philosophe *philosophe)
       else
 	tmp->cycle = REST;
       tmp->id = i;
+      tmp->stolen = tmp->next->own;
       tmp = tmp->next;
     }
   ++i;
@@ -53,6 +54,7 @@ void		setRolecycle(t_philosophe *philosophe)
   else
     tmp->cycle = REST;
   tmp->id = i;
+  tmp->stolen = tmp->next->own;
   tmp = tmp->next;
 }
 

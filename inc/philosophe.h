@@ -5,7 +5,7 @@
 ** Login   <philippe1.lefevre@epitech.eu>
 **
 ** Started on  Wed Mar  8 09:51:22 2017 Philippe Lefevre
-** Last update	Wed Mar 08 19:05:31 2017 Full Name
+** Last update	Thu Mar 09 14:20:42 2017 Full Name
 */
 
 #ifndef	PHILOSOPHE_H_
@@ -18,6 +18,7 @@
 # define		SUCCESS	0
 # define		ERROR	1
 
+# include		<pthread.h>
 enum			e_cycle {
   UNDIFINED = -1,
   REST = 0,
@@ -38,13 +39,15 @@ typedef struct		s_philosophe
   enum e_chopstick	chopstick_right;
   unsigned int		eat_occur;
   unsigned int		id;
+  pthread_mutex_t	*own;
+  pthread_mutex_t	*stolen;
   struct s_philosophe	*next;
   struct s_philosophe	*prev;
 }			t_philosophe;
 
-void		initArg(char **av, unsigned int *nb_philosophe,
-			unsigned int *nb_eat_occur);
-  t_philosophe	*initPhilosophe(unsigned int *nb_philosophe, char **av);
+void			initArg(char **av, unsigned int *nb_philosophe,
+				unsigned int *nb_eat_occur);
+t_philosophe		*initPhilosophe(unsigned int *nb_philosophe, char **av);
 int			is_num(char *s);
 t_philosophe		*createNode(enum e_cycle cycle, unsigned int eat_occur);
 t_philosophe		*addNode(t_philosophe *list,

@@ -5,13 +5,13 @@
 ## Login   <philippe1.lefevre@epitech.eu>
 ##
 ## Started on  Wed Mar  8 09:30:40 2017 Philippe Lefevre
-## Last update Wed Mar  8 17:53:34 2017 Philippe Lefevre
+## Last update Thu Mar  9 14:21:39 2017 Philippe Lefevre
 ##
 
 NAME		=	philo
 
 CC		=	gcc -g
-CFLAGS		=	-W -Wextra -Wall -pedantic -ansi
+CFLAGS		=	-W -Wextra -Wall -pedantic -ansi -std=c99
 #CFLAGS		+=	-Werror
 CFLAGS		+=	-Iinc
 

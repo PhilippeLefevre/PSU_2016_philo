@@ -5,7 +5,7 @@
 ** Login   <philippe1.lefevre@epitech.eu>
 **
 ** Started on  Wed Mar  8 09:35:54 2017 Philippe Lefevre
-** Last update	Wed Mar 08 19:34:39 2017 Full Name
+** Last update	Thu Mar 09 15:02:16 2017 Full Name
 */
 
 #include	"extern.h"
@@ -30,27 +30,44 @@ int		haveFullyeat(t_philosophe *philosophe)
 void		*doPhilosophe(void *p)
 {
   t_philosophe	*philosophe;
-  unsigned int	i;
-  pthread_mutex_t		mutex = PTHREAD_MUTEX_INITIALIZER;
+  t_philosophe	*tmp;
+
   philosophe = p;
-
-  fprintf(stderr, "thread successfully created for philosophe %d\n", philosophe->id);
-  if (philosophe->cycle == EAT)
+  while (philosophe->eat_occur != 0)
     {
-      pthread_mutex_trylock(&mutex);
-      lphilo_take_chopstick(&mutex);
-      lphilo_eat();
-      pthread_mutex_unlock(&mutex);
-    }
-  else
-    lphilo_sleep();
-
-  /*while (philosophe->eat_occur != 0);*/
-    if (philosophe->eat_occur == 0)
+      tmp = philosophe;
+      while (tmp->next != philosophe)
 	{
+	  if (tmp->eat_occur == 0)
+	    {
+	      RCFCleanup();
+	      exit(0);
+	    }
+	  tmp = tmp->next;
+	}
+      if (tmp->eat_occur == 0)
+	{
+	  RCFCleanup();
 	  exit(0);
 	}
-    sleep(5);
+      if (philosophe->cycle == EAT)
+	{
+	  while (pthread_mutex_trylock(philosophe->stolen) == 0);
+	  lphilo_take_chopstick(philosophe->stolen);
+	  lphilo_eat();
+	  philosophe->eat_occur--;
+	  pthread_mutex_unlock(philosophe->stolen);
+	  philosophe->cycle = REST;
+	}
+      else
+	{
+	  pthread_mutex_unlock(philosophe->own);
+	  lphilo_sleep();
+	  while (pthread_mutex_trylock(philosophe->own) == 0);
+          lphilo_take_chopstick(philosophe->own);
+          philosophe->cycle = EAT;
+	}
+    }
   pthread_exit(NULL);
 }
 

@@ -5,7 +5,7 @@
 ** Login   <philippe1.lefevre@epitech.eu>
 **
 ** Started on  Wed Mar  8 10:57:57 2017 Philippe Lefevre
-** Last update	Wed Mar 08 18:19:11 2017 Full Name
+** Last update	Thu Mar 09 15:04:01 2017 Full Name
 */
 
 #include	"philosophe.h"
@@ -14,7 +14,11 @@ t_philosophe	*createNode(enum e_cycle cycle, unsigned int eat_occur)
 {
   t_philosophe	*new_node;
 
-  if ((new_node = malloc(sizeof(t_philosophe))) == NULL)
+  if (((new_node = malloc(sizeof(t_philosophe))) == NULL)
+      || ((new_node->own = malloc(sizeof(*new_node->own))) == NULL)
+      || (pthread_mutex_init(new_node->own, NULL) != 0)
+      || ((new_node->stolen = malloc(sizeof(*new_node->stolen))) == NULL)
+      || (pthread_mutex_init(new_node->stolen, NULL) != 0))
     return (NULL);
   new_node->cycle = cycle;
   new_node->chopstick_left = RELEASE;
@@ -22,6 +26,7 @@ t_philosophe	*createNode(enum e_cycle cycle, unsigned int eat_occur)
   new_node->eat_occur = eat_occur;
   new_node->next = new_node;
   new_node->prev = new_node;
+  pthread_mutex_trylock(new_node->own);
   return (new_node);
 }
 
@@ -87,7 +92,8 @@ void		freeList(t_philosophe *philosophe)
     {
       to_free = tmp;
       tmp = tmp->next;
+      free(to_free->own);
+      free(to_free->stolen);
       free(to_free);
     }
-  free(tmp);
 }
