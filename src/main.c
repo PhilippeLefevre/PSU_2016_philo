@@ -5,115 +5,19 @@
 ** Login   <philippe1.lefevre@epitech.eu>
 **
 ** Started on  Wed Mar  8 09:35:54 2017 Philippe Lefevre
-** Last update	Thu Mar 09 16:31:21 2017 Full Name
+** Last update	Thu Mar 09 16:44:13 2017 Full Name
 */
 
-#include	"extern.h"
 #include	"philosophe.h"
-
-int		haveFullyeat(t_philosophe *philosophe)
-{
-  t_philosophe	*tmp;
-
-  tmp = philosophe;
-  while (tmp != NULL)
-    {
-      if (tmp->eat_occur == 0)
-	return (1);
-      tmp = tmp->next;
-    }
-  if (tmp->eat_occur == 0)
-    return (1);
-  return (0);
-}
-
-void		*doPhilosophe(void *p)
-{
-  t_philosophe	*philosophe;
-  t_philosophe	*tmp;
-
-  philosophe = p;
-  pthread_mutex_trylock(philosophe->own);
-  lphilo_take_chopstick(philosophe->own);
-  while (philosophe->eat_occur != 0)
-    {
-      tmp = philosophe;
-      while (tmp->next != philosophe)
-	{
-	  if (tmp->eat_occur == 0)
-	    {
-	      RCFCleanup();
-              exit(SUCCESS);
-	    }
-	  tmp = tmp->next;
-	}
-      if (tmp->eat_occur == 0)
-	{
-	  RCFCleanup();
-	  exit(SUCCESS);
-	}
-      usleep(1);
-      if (philosophe->cycle == EAT)
-	{
-	  while (pthread_mutex_trylock(philosophe->stolen) == 0);
-	  lphilo_take_chopstick(philosophe->stolen);
-	  lphilo_eat();
-	  philosophe->eat_occur--;
-	  lphilo_release_chopstick(philosophe->stolen);
-	  pthread_mutex_unlock(philosophe->stolen);
-	  philosophe->cycle = REST;
-	}
-      else if (philosophe->cycle == REST)
-	{
-	  pthread_mutex_unlock(philosophe->own);
-	  lphilo_release_chopstick(philosophe->own);
-	  lphilo_sleep();
-	  while (pthread_mutex_trylock(philosophe->own) == 0);
-	  lphilo_take_chopstick(philosophe->own);
-	  philosophe->cycle = THINK;
-	}
-      else
-	{
-	  lphilo_think();
-	  philosophe->cycle = EAT;
-	}
-    }
-  pthread_exit(NULL);
-}
-
-void		doTable(unsigned int nb_philosophe, t_philosophe *philosophe)
-{
-  t_philosophe	*tmp;
-  pthread_t	thread_id[nb_philosophe];
-  unsigned int	i;
-
-  i = 0;
-  tmp = philosophe;
-  while (tmp->next != philosophe)
-    {
-      if (pthread_create(&thread_id[i], NULL, doPhilosophe, (void *)tmp))
-	exit(fprintf(stderr, "Error: can not create thread\n") - 1);
-      i++;
-      tmp = tmp->next;
-    }
-  if (pthread_create(&thread_id[i], NULL, doPhilosophe, (void *)tmp))
-    exit(fprintf(stderr, "Error: can not create thread\n") - 1);
-  i = -1;
-  while (++i < nb_philosophe)
-    pthread_join(thread_id[i], NULL);
-}
 
 int             main(int ac, char **av)
 {
   t_philosophe	*philosophe;
   unsigned int	nb_philosophe;
 
-
   RCFStartup(ac, av);
   if ((philosophe = initPhilosophe(&nb_philosophe, av)) == NULL)
     return (ERROR);
   doTable(nb_philosophe, philosophe);
-  /* freeList(philosophe); */
-  /* RCFCleanup(); */
   return (SUCCESS);
 }

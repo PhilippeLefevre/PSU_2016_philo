@@ -5,7 +5,7 @@
 ** Login   <philippe1.lefevre@epitech.eu>
 **
 ** Started on  Wed Mar  8 09:51:22 2017 Philippe Lefevre
-** Last update	Thu Mar 09 16:15:11 2017 Full Name
+** Last update	Thu Mar 09 16:44:51 2017 Full Name
 */
 
 #ifndef	PHILOSOPHE_H_
@@ -16,6 +16,7 @@
 # include		<string.h>
 # include		<pthread.h>
 # include		<unistd.h>
+# include		"extern.h"
 
 # define		SUCCESS	0
 # define		ERROR	1
@@ -54,6 +55,8 @@ t_philosophe		*createNode(enum e_cycle cycle, unsigned int eat_occur);
 t_philosophe		*addNode(t_philosophe *list,
 				 enum e_cycle cycle,
 				 unsigned int eat_occur);
+void			doTable(unsigned int nb_philosophe,
+				t_philosophe *philosophe);
 void			showList(t_philosophe *philosophe);
 void			freeList(t_philosophe *philosophe);
 

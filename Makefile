@@ -5,7 +5,7 @@
 ## Login   <philippe1.lefevre@epitech.eu>
 ##
 ## Started on  Wed Mar  8 09:30:40 2017 Philippe Lefevre
-## Last update Thu Mar  9 16:16:51 2017 Philippe Lefevre
+## Last update Thu Mar  9 16:41:47 2017 Philippe Lefevre
 ##
 
 NAME		=	philo
@@ -20,6 +20,7 @@ LDFLAGS		=	-Llib -lriceferee -lpthread
 SRC		=	src/main.c			\
 			src/init.c			\
 			src/utils.c			\
+			src/table.c			\
 			src/listPhilosophe.c
 
 OBJ		=	$(SRC:.c=.o)
