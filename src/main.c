@@ -5,7 +5,7 @@
 ** Login   <philippe1.lefevre@epitech.eu>
 **
 ** Started on  Wed Mar  8 09:35:54 2017 Philippe Lefevre
-** Last update	Thu Mar 09 15:02:16 2017 Full Name
+** Last update	Thu Mar 09 16:31:21 2017 Full Name
 */
 
 #include	"extern.h"
@@ -33,6 +33,8 @@ void		*doPhilosophe(void *p)
   t_philosophe	*tmp;
 
   philosophe = p;
+  pthread_mutex_trylock(philosophe->own);
+  lphilo_take_chopstick(philosophe->own);
   while (philosophe->eat_occur != 0)
     {
       tmp = philosophe;
@@ -41,31 +43,39 @@ void		*doPhilosophe(void *p)
 	  if (tmp->eat_occur == 0)
 	    {
 	      RCFCleanup();
-	      exit(0);
+              exit(SUCCESS);
 	    }
 	  tmp = tmp->next;
 	}
       if (tmp->eat_occur == 0)
 	{
 	  RCFCleanup();
-	  exit(0);
+	  exit(SUCCESS);
 	}
+      usleep(1);
       if (philosophe->cycle == EAT)
 	{
 	  while (pthread_mutex_trylock(philosophe->stolen) == 0);
 	  lphilo_take_chopstick(philosophe->stolen);
 	  lphilo_eat();
 	  philosophe->eat_occur--;
+	  lphilo_release_chopstick(philosophe->stolen);
 	  pthread_mutex_unlock(philosophe->stolen);
 	  philosophe->cycle = REST;
 	}
-      else
+      else if (philosophe->cycle == REST)
 	{
 	  pthread_mutex_unlock(philosophe->own);
+	  lphilo_release_chopstick(philosophe->own);
 	  lphilo_sleep();
 	  while (pthread_mutex_trylock(philosophe->own) == 0);
-          lphilo_take_chopstick(philosophe->own);
-          philosophe->cycle = EAT;
+	  lphilo_take_chopstick(philosophe->own);
+	  philosophe->cycle = THINK;
+	}
+      else
+	{
+	  lphilo_think();
+	  philosophe->cycle = EAT;
 	}
     }
   pthread_exit(NULL);
@@ -102,9 +112,8 @@ int             main(int ac, char **av)
   RCFStartup(ac, av);
   if ((philosophe = initPhilosophe(&nb_philosophe, av)) == NULL)
     return (ERROR);
-  showList(philosophe);
   doTable(nb_philosophe, philosophe);
-  freeList(philosophe);
-  RCFCleanup();
+  /* freeList(philosophe); */
+  /* RCFCleanup(); */
   return (SUCCESS);
 }

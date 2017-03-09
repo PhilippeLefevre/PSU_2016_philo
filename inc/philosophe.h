@@ -5,7 +5,7 @@
 ** Login   <philippe1.lefevre@epitech.eu>
 **
 ** Started on  Wed Mar  8 09:51:22 2017 Philippe Lefevre
-** Last update	Thu Mar 09 14:20:42 2017 Full Name
+** Last update	Thu Mar 09 16:15:11 2017 Full Name
 */
 
 #ifndef	PHILOSOPHE_H_
@@ -14,11 +14,12 @@
 # include		<stdlib.h>
 # include		<stdio.h>
 # include		<string.h>
+# include		<pthread.h>
+# include		<unistd.h>
 
 # define		SUCCESS	0
 # define		ERROR	1
 
-# include		<pthread.h>
 enum			e_cycle {
   UNDIFINED = -1,
   REST = 0,

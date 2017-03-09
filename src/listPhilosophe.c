@@ -5,7 +5,7 @@
 ** Login   <philippe1.lefevre@epitech.eu>
 **
 ** Started on  Wed Mar  8 10:57:57 2017 Philippe Lefevre
-** Last update	Thu Mar 09 15:04:01 2017 Full Name
+** Last update	Thu Mar 09 15:16:13 2017 Full Name
 */
 
 #include	"philosophe.h"
@@ -26,7 +26,6 @@ t_philosophe	*createNode(enum e_cycle cycle, unsigned int eat_occur)
   new_node->eat_occur = eat_occur;
   new_node->next = new_node;
   new_node->prev = new_node;
-  pthread_mutex_trylock(new_node->own);
   return (new_node);
 }
 
