@@ -5,7 +5,7 @@
 ** Login   <philippe1.lefevre@epitech.eu>
 **
 ** Started on  Thu Mar  9 16:35:25 2017 Philippe Lefevre
-** Last update	Thu Mar 09 16:48:48 2017 Philippe Lefevre
+** Last update	Sat Mar 11 04:05:18 2017 Philippe Lefevre
 */
 
 #include	"philosophe.h"
@@ -64,11 +64,7 @@ static void	*doPhilosophe(void *p)
   while (philosophe->eat_occur != 0)
     {
       if (haveFullyeat(philosophe))
-	{
-	  pthread_exit(NULL);
-	  RCFCleanup();
-	  exit(SUCCESS);
-	}
+	pthread_exit(NULL);
       usleep(1);
       doCycle(philosophe);
     }
@@ -86,14 +82,13 @@ void		doTable(unsigned int nb_philosophe, t_philosophe *philosophe)
   while (tmp->next != philosophe)
     {
       if (pthread_create(&thread_id[i], NULL, doPhilosophe, (void *)tmp))
-	exit(fprintf(stderr, "Error: can not create thread\n") - 1);
+	exit(fprintf(stderr, "Error: cannot create thread\n") - 1);
       i++;
       tmp = tmp->next;
     }
   if (pthread_create(&thread_id[i], NULL, doPhilosophe, (void *)tmp))
-    exit(fprintf(stderr, "Error: can not create thread\n") - 1);
+    exit(fprintf(stderr, "Error: cannot create thread\n") - 1);
   i = -1;
   while (++i < nb_philosophe)
     pthread_join(thread_id[i], NULL);
-  RCFCleanup();
 }

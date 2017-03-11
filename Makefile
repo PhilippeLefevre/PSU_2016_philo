@@ -5,7 +5,7 @@
 ## Login   <philippe1.lefevre@epitech.eu>
 ##
 ## Started on  Wed Mar  8 09:30:40 2017 Philippe Lefevre
-## Last update Fri Mar 10 18:06:21 2017 Philippe Lefevre
+## Last update Sat Mar 11 04:31:23 2017 Philippe Lefevre
 ##
 
 NAME		=	philo
@@ -28,13 +28,23 @@ OBJ		=	$(SRC:.c=.o)
 all		:	$(NAME)
 
 $(NAME)		:	$(OBJ)
-			$(CC) $(OBJ) $(LDFLAGS) -o $(NAME)
+			@$(CC) $(OBJ) $(LDFLAGS) -o $(NAME) && \
+			printf "[\033[1;36mbuilt\033[0m] % 32s\n" $(NAME) | tr ' ' '.' || \
+			printf "[\033[1;31mfailed\033[0m] % 31s\n" $(NAME) | tr ' ' '.'
 
+.c.o		:
+			@$(CC) $(CFLAGS) $(LDFLAG) -c $< -o $@ && \
+			printf "[\033[1;32mcompiled\033[0m] % 29s\n" $< | tr ' ' '.' || \
+			printf "[\033[1;31mfailed\033[0m] % 31s\n" $< | tr ' ' '.'
 clean		:
-			$(RM) $(OBJ)
+			@$(RM) $(OBJ) && \
+			printf "[\033[1;31mdeleted\033[0m] % 30s\n" $(OBJ) | tr ' ' '.' || \
+			printf "[\033[1;31mdeleted\033[0m] % 30s\n" $(OBJ) | tr ' ' '.'
 
 fclean		:	clean
-			$(RM) $(NAME)
+			@$(RM) $(NAME) && \
+			printf "[\033[1;31mdeleted\033[0m] % 30s\n" $(NAME) | tr ' ' '.' || \
+			printf "[\033[1;31mdeleted\033[0m] % 30s\n" $(NAME) | tr ' ' '.'
 
 re		:	fclean all
 

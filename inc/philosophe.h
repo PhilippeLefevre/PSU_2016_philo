@@ -5,7 +5,7 @@
 ** Login   <philippe1.lefevre@epitech.eu>
 **
 ** Started on  Wed Mar  8 09:51:22 2017 Philippe Lefevre
-** Last update	Thu Mar 09 16:44:51 2017 Philippe Lefevre
+** Last update	Sat Mar 11 03:56:52 2017 Philippe Lefevre
 */
 
 #ifndef	PHILOSOPHE_H_
@@ -28,17 +28,9 @@ enum			e_cycle {
   THINK
 };
 
-enum			e_chopstick {
-  RELEASE = 0,
-  TAKE
-};
-
 typedef struct		s_philosophe
 {
-  int			first;
   enum e_cycle		cycle;
-  enum e_chopstick	chopstick_left;
-  enum e_chopstick	chopstick_right;
   unsigned int		eat_occur;
   unsigned int		id;
   pthread_mutex_t	*own;

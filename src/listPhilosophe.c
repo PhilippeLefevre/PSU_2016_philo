@@ -5,7 +5,7 @@
 ** Login   <philippe1.lefevre@epitech.eu>
 **
 ** Started on  Wed Mar  8 10:57:57 2017 Philippe Lefevre
-** Last update	Thu Mar 09 15:16:13 2017 Philippe Lefevre
+** Last update	Sat Mar 11 03:45:02 2017 Philippe Lefevre
 */
 
 #include	"philosophe.h"
@@ -16,13 +16,9 @@ t_philosophe	*createNode(enum e_cycle cycle, unsigned int eat_occur)
 
   if (((new_node = malloc(sizeof(t_philosophe))) == NULL)
       || ((new_node->own = malloc(sizeof(*new_node->own))) == NULL)
-      || (pthread_mutex_init(new_node->own, NULL) != 0)
-      || ((new_node->stolen = malloc(sizeof(*new_node->stolen))) == NULL)
-      || (pthread_mutex_init(new_node->stolen, NULL) != 0))
+      || (pthread_mutex_init(new_node->own, NULL) != 0))
     return (NULL);
   new_node->cycle = cycle;
-  new_node->chopstick_left = RELEASE;
-  new_node->chopstick_right = TAKE;
   new_node->eat_occur = eat_occur;
   new_node->next = new_node;
   new_node->prev = new_node;
@@ -60,10 +56,9 @@ void		showList(t_philosophe *philosophe)
   unsigned int	i;
 
   tmp = philosophe;
-  i = 0;
-  while (tmp->next != philosophe)
+  i = -1;
+  while (tmp->next != philosophe || ++i == 0)
     {
-      ++i;
       printf("Philosophe %d still %d eat occurence ; cycle %s\n",
 	     i, tmp->eat_occur, ((tmp->cycle == REST) ? ("REST")
 				 : ((tmp->cycle == EAT) ? ("EAT")
@@ -72,13 +67,6 @@ void		showList(t_philosophe *philosophe)
       tmp = tmp->next;
 
     }
-  ++i;
-  printf("Philosophe %d still %d eat occurence ; cycle %s\n",
-	 i, tmp->eat_occur, ((tmp->cycle == REST) ? ("REST")
-			     : ((tmp->cycle == EAT) ? ("EAT")
-				: ((tmp->cycle == THINK) ? ("THINK")
-				   : "UNDIFINED"))));
-  tmp = tmp->next;
 }
 
 void		freeList(t_philosophe *philosophe)
@@ -92,7 +80,8 @@ void		freeList(t_philosophe *philosophe)
       to_free = tmp;
       tmp = tmp->next;
       free(to_free->own);
-      free(to_free->stolen);
       free(to_free);
     }
+  free(tmp->own);
+  free(tmp);
 }
