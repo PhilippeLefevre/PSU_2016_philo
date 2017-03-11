@@ -5,7 +5,7 @@
 ** Login   <philippe1.lefevre@epitech.eu>
 **
 ** Started on  Wed Mar  8 16:48:31 2017 Philippe Lefevre
-** Last update	Thu Mar 09 16:24:20 2017 Philippe Lefevre
+** Last update	Sat Mar 11 02:24:27 2017 Philippe Lefevre
 */
 
 #include	"philosophe.h"
@@ -63,6 +63,8 @@ t_philosophe	*initPhilosophe(unsigned int *nb_philosophe, char **av)
   unsigned int	nb_eat_occur;
   unsigned int 	i;
 
+  *nb_philosophe = 0;
+  nb_eat_occur = 0;
   initArg(av, nb_philosophe, &nb_eat_occur);
   if ((*nb_philosophe < 2) || (nb_eat_occur == 0))
     return (NULL);
