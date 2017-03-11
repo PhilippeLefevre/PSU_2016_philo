@@ -10,6 +10,6 @@ export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$PWD/lib/
 # think > eat > rest
 # rest > think | eat
 #
-# rest > think > eat > rest
-# rest > eat > think > eat > rest
-# rest > eat > rest
+# rest > think > eat
+# rest > eat > think > eat
+# rest > eat

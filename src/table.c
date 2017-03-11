@@ -5,12 +5,28 @@
 ** Login   <philippe1.lefevre@epitech.eu>
 **
 ** Started on  Thu Mar  9 16:35:25 2017 Philippe Lefevre
-** Last update	Sat Mar 11 04:05:18 2017 Philippe Lefevre
+** Last update	Sat Mar 11 05:37:20 2017 Philippe Lefevre
 */
 
 #include	"philosophe.h"
 
 static int	haveFullyeat(t_philosophe *philosophe)
+{
+  t_philosophe	*tmp;
+
+  tmp = philosophe;
+  while (tmp->next != philosophe)
+    {
+      if (tmp->start == UNREADY)
+	return (1);
+      tmp = tmp->next;
+    }
+  if (tmp->start == UNREADY)
+    return (1);
+  return (0);
+}
+/*
+static int	waitStart(t_philosophe *philosophe)
 {
   t_philosophe	*tmp;
 
@@ -25,10 +41,10 @@ static int	haveFullyeat(t_philosophe *philosophe)
     return (1);
   return (0);
 }
-
+*/
 static void	doCycle(t_philosophe *philosophe)
 {
-  if (philosophe->cycle == EAT)
+  if (philosophe->state == EAT)
     {
       while (pthread_mutex_trylock(philosophe->stolen) == 0);
       lphilo_take_chopstick(philosophe->stolen);
@@ -36,21 +52,21 @@ static void	doCycle(t_philosophe *philosophe)
       philosophe->eat_occur--;
       lphilo_release_chopstick(philosophe->stolen);
       pthread_mutex_unlock(philosophe->stolen);
-      philosophe->cycle = REST;
+      philosophe->state = REST;
     }
-  else if (philosophe->cycle == REST)
+  else if (philosophe->state == REST)
     {
       pthread_mutex_unlock(philosophe->own);
       lphilo_release_chopstick(philosophe->own);
       lphilo_sleep();
       while (pthread_mutex_trylock(philosophe->own) == 0);
       lphilo_take_chopstick(philosophe->own);
-      philosophe->cycle = THINK;
+      philosophe->state = THINK;
     }
   else
     {
       lphilo_think();
-      philosophe->cycle = EAT;
+      philosophe->state = EAT;
     }
 }
 
@@ -59,6 +75,7 @@ static void	*doPhilosophe(void *p)
   t_philosophe	*philosophe;
 
   philosophe = p;
+  philosophe->start = READY;
   pthread_mutex_trylock(philosophe->own);
   lphilo_take_chopstick(philosophe->own);
   while (philosophe->eat_occur != 0)

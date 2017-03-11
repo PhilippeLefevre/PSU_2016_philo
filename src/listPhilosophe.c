@@ -5,12 +5,12 @@
 ** Login   <philippe1.lefevre@epitech.eu>
 **
 ** Started on  Wed Mar  8 10:57:57 2017 Philippe Lefevre
-** Last update	Sat Mar 11 03:45:02 2017 Philippe Lefevre
+** Last update	Sat Mar 11 05:17:10 2017 Philippe Lefevre
 */
 
 #include	"philosophe.h"
 
-t_philosophe	*createNode(enum e_cycle cycle, unsigned int eat_occur)
+t_philosophe	*createNode(enum e_state state, unsigned int eat_occur)
 {
   t_philosophe	*new_node;
 
@@ -18,7 +18,8 @@ t_philosophe	*createNode(enum e_cycle cycle, unsigned int eat_occur)
       || ((new_node->own = malloc(sizeof(*new_node->own))) == NULL)
       || (pthread_mutex_init(new_node->own, NULL) != 0))
     return (NULL);
-  new_node->cycle = cycle;
+  new_node->start = UNREADY;
+  new_node->state = state;
   new_node->eat_occur = eat_occur;
   new_node->next = new_node;
   new_node->prev = new_node;
@@ -26,7 +27,7 @@ t_philosophe	*createNode(enum e_cycle cycle, unsigned int eat_occur)
 }
 
 t_philosophe	*addNode(t_philosophe *list,
-			 enum e_cycle cycle,
+			 enum e_state state,
 			 unsigned int eat_occur)
 {
   t_philosophe	*new;
@@ -34,12 +35,12 @@ t_philosophe	*addNode(t_philosophe *list,
 
   if (list == NULL)
     {
-      if ((new = createNode(cycle, eat_occur)) == NULL)
+      if ((new = createNode(state, eat_occur)) == NULL)
 	return (NULL);
       return (new);
     }
   tmp = list;
-  if ((new = createNode(cycle, eat_occur)) == NULL)
+  if ((new = createNode(state, eat_occur)) == NULL)
     return (NULL);
   while (tmp->next != list)
     tmp = tmp->next;
@@ -56,13 +57,14 @@ void		showList(t_philosophe *philosophe)
   unsigned int	i;
 
   tmp = philosophe;
-  i = -1;
-  while (tmp->next != philosophe || ++i == 0)
+  i = 0;
+  while (tmp->next != philosophe || i == 0)
     {
-      printf("Philosophe %d still %d eat occurence ; cycle %s\n",
-	     i, tmp->eat_occur, ((tmp->cycle == REST) ? ("REST")
-				 : ((tmp->cycle == EAT) ? ("EAT")
-				    : ((tmp->cycle == THINK) ? ("THINK")
+      ++i;
+      printf("Philosophe %d still %d eat occurence ; state %s\n",
+	     i, tmp->eat_occur, ((tmp->state == REST) ? ("REST")
+				 : ((tmp->state == EAT) ? ("EAT")
+				    : ((tmp->state == THINK) ? ("THINK")
 				       : "UNDIFINED"))));
       tmp = tmp->next;
 

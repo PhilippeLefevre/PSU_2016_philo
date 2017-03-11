@@ -5,7 +5,7 @@
 ** Login   <philippe1.lefevre@epitech.eu>
 **
 ** Started on  Wed Mar  8 16:48:31 2017 Philippe Lefevre
-** Last update	Sat Mar 11 04:05:19 2017 Philippe Lefevre
+** Last update	Sat Mar 11 05:21:03 2017 Philippe Lefevre
 */
 
 #include	"philosophe.h"
@@ -30,19 +30,20 @@ void		initArg(char **av, unsigned int *nb_philosophe,
       }
 }
 
-void		setRolecycle(t_philosophe *philosophe)
+void		setRolestate(t_philosophe *philosophe)
 {
   t_philosophe	*tmp;
   unsigned int	i;
 
   tmp = philosophe;
-  i = -1;
-  while (tmp != philosophe || ++i == 0)
+  i = 0;
+  while (tmp != philosophe || i == 0)
     {
+      ++i;
       if (i % 2)
-	tmp->cycle = EAT;
+	tmp->state = EAT;
       else
-	tmp->cycle = THINK;
+	tmp->state = REST;
       tmp->id = i;
       tmp->stolen = tmp->next->own;
       tmp = tmp->next;
@@ -64,6 +65,6 @@ t_philosophe	*initPhilosophe(unsigned int *nb_philosophe, char **av)
   i = 0;
   while (++i <= *nb_philosophe)
     philosophe = addNode(philosophe, THINK, nb_eat_occur);
-  setRolecycle(philosophe);
+  setRolestate(philosophe);
   return (philosophe);
 }
