@@ -5,44 +5,11 @@
 ** Login   <philippe1.lefevre@epitech.eu>
 **
 ** Started on  Thu Mar  9 16:35:25 2017 Philippe Lefevre
-** Last update	Wed Mar 15 15:30:03 2017 Philippe Lefevre
+** Last update	Wed Mar 15 15:52:34 2017 Philippe Lefevre
 */
 
 #include	"philosophe.h"
 
-/*
-static int	haveFullyeat(t_philosophe *philosophe)
-{
-  t_philosophe	*tmp;
-
-  tmp = philosophe;
-  while (tmp->next != philosophe)
-    {
-      if (tmp->start == UNREADY)
-	return (1);
-      tmp = tmp->next;
-    }
-  if (tmp->start == UNREADY)
-    return (1);
-  return (0);
-}
-
-static int	waitStart(t_philosophe *philosophe)
-{
-  t_philosophe	*tmp;
-
-  tmp = philosophe;
-  while (tmp->next != philosophe)
-    {
-      if (tmp->eat_occur == 0)
-	return (1);
-      tmp = tmp->next;
-    }
-  if (tmp->eat_occur == 0)
-    return (1);
-  return (0);
-}
-*/
 static void	doCycle(t_philosophe *philosophe)
 {
   if (philosophe->state == EAT)
@@ -81,8 +48,6 @@ static void	*doPhilosophe(void *p)
   lphilo_take_chopstick(philosophe->own);
   while (philosophe->eat_occur > 0)
     {
-      /*if (haveFullyeat(philosophe))
-	pthread_exit(NULL);*/
       if (philosophe->eat_occur > 0)
 	doCycle(philosophe);
     }
