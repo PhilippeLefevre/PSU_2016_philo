@@ -5,7 +5,7 @@
 ** Login   <philippe1.lefevre@epitech.eu>
 **
 ** Started on  Wed Mar  8 09:51:22 2017 Philippe Lefevre
-** Last update	Sat Mar 11 04:59:28 2017 Philippe Lefevre
+** Last update	Wed Mar 15 16:58:23 2017 Philippe Lefevre
 */
 
 #ifndef	PHILOSOPHE_H_
@@ -28,14 +28,8 @@ enum			e_state {
   THINK
 };
 
-enum			e_start {
-  UNREADY = 0,
-  READY = 1,
-};
-
 typedef struct		s_philosophe
 {
-  enum e_start		start;
   enum e_state		state;
   unsigned int		eat_occur;
   unsigned int		id;

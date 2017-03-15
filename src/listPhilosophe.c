@@ -5,7 +5,7 @@
 ** Login   <philippe1.lefevre@epitech.eu>
 **
 ** Started on  Wed Mar  8 10:57:57 2017 Philippe Lefevre
-** Last update	Sat Mar 11 05:56:29 2017 Philippe Lefevre
+** Last update	Wed Mar 15 16:58:18 2017 Philippe Lefevre
 */
 
 #include	"philosophe.h"
@@ -18,7 +18,6 @@ t_philosophe	*createNode(enum e_state state, unsigned int eat_occur)
       || ((new_node->own = malloc(sizeof(*new_node->own))) == NULL)
       || (pthread_mutex_init(new_node->own, NULL) != 0))
     return (NULL);
-  new_node->start = UNREADY;
   new_node->state = state;
   new_node->eat_occur = eat_occur;
   new_node->next = new_node;
