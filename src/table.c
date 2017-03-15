@@ -5,7 +5,7 @@
 ** Login   <philippe1.lefevre@epitech.eu>
 **
 ** Started on  Thu Mar  9 16:35:25 2017 Philippe Lefevre
-** Last update	Sat Mar 11 05:37:20 2017 Philippe Lefevre
+** Last update	Wed Mar 15 14:46:24 2017 Philippe Lefevre
 */
 
 #include	"philosophe.h"
@@ -80,10 +80,10 @@ static void	*doPhilosophe(void *p)
   lphilo_take_chopstick(philosophe->own);
   while (philosophe->eat_occur != 0)
     {
-      if (haveFullyeat(philosophe))
-	pthread_exit(NULL);
-      usleep(1);
-      doCycle(philosophe);
+      /*if (haveFullyeat(philosophe))
+	pthread_exit(NULL);*/
+      if (philosophe->eat_occur > 0)
+	doCycle(philosophe);
     }
   pthread_exit(NULL);
 }
