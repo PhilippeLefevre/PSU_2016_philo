@@ -1,13 +1,3 @@
-/*
-** extern.h for  in /home/atraxys/workspace/epitech/year_2/PSU_2016_philo/inc/
-**
-** Made by Philippe Lefevre
-** Login   <philippe1.lefevre@epitech.eu>
-**
-** Started on  Wed Mar  8 09:38:51 2017 Philippe Lefevre
-** Last update	Wed Mar 08 09:38:54 2017 Philippe Lefevre
-*/
-
 #ifndef __LIBRICEFEREE_EXTERN__
 # define __LIBRICEFEREE_EXTERN__
 
@@ -19,8 +9,9 @@
  * Remember to set LD_LIBRARY_PATH.
  * None of thoses functions will do your job!
  * Thoses are entry points for the Referee.
- * mutex_id parameter of lphilo_take_chopstick/lphilo_release_chopstick functions
- * is the pointer of the (const) mutex you use to handle the current chopstick.
+ * mutex_id parameter of lphilo_[take/release]_chopstick functions
+ * is the pointer of the (const) mutex you use to handle 
+ * the current chopstick.
  */
 
 /* MUST be the first instruction in your main to Init the library */
